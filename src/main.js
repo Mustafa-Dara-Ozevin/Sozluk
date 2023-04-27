@@ -2,10 +2,12 @@ const { invoke } = window.__TAURI__.tauri;
 
 let greetInputEl;
 let meaningsEl;
+let titleEl
 
 async function search() {
-  
-  const meanings = await invoke("search", { query: greetInputEl.value })
+  let text =  greetInputEl.value
+  const meanings = await invoke("search", { query: text })
+  titleEl.textContent = text;
   let meaning = "";
   meaningsEl.textContent = '';
   if (meanings.length === 0){
@@ -27,6 +29,7 @@ async function search() {
 window.addEventListener("DOMContentLoaded", () => {
   greetInputEl = document.querySelector("#search-input");
   meaningsEl = document.querySelector("#meanings");
+  titleEl = document.querySelector("#title");
 
   document
     .querySelector("#search-button")
