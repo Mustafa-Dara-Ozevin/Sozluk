@@ -27,15 +27,14 @@ impl Word {
 
 }
 #[tauri::command]
-fn search(query: &str) -> Vec<String> {
+async fn search(query: &str) -> Result<Vec<String>, ()>   {
     let mut word = Word::new();
     let url = format!(
         "https://sozluk.gov.tr/gts?ara={}",
         query.trim().to_lowercase()
     );
-    let res = reqwest::blocking::get(url).unwrap();
+    let body = reqwest::get(url).await.unwrap().json::<serde_json::Value>().await.unwrap();
 
-    let body = res.json::<serde_json::Value>().unwrap();
     let dif_defs = body.to_string().matches("anlamlarListe").count();
     for j in 0..dif_defs {
         let mut definition_count: String = body[0]["anlam_say"].to_string(); // can't parse the string because it is ""number"" instead "number"
@@ -48,7 +47,7 @@ fn search(query: &str) -> Vec<String> {
             }
         }
     }
-    return word.definitions
+    return Ok(word.definitions)
 }
 
 
