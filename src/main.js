@@ -2,7 +2,7 @@ const { invoke } = window.__TAURI__.tauri;
 
 let greetInputEl;
 let meaningsEl;
-let titleEl
+let titleEl;
 
 async function search() {
   let text =  greetInputEl.value
@@ -11,7 +11,7 @@ async function search() {
   let meaning = "";
   meaningsEl.textContent = '';
   if (meanings.length === 0){
-    
+    return
   }else{
     for (meaning of meanings){
       const li = document.createElement("li");
@@ -20,6 +20,7 @@ async function search() {
     }
 
   }
+
   
   
 }
