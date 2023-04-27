@@ -5,11 +5,11 @@ let meaningsEl;
 
 async function search() {
   
-  const meanings = await invoke("search", { query: greetInputEl.value });
+  const meanings = await invoke("search", { query: greetInputEl.value })
   let meaning = "";
   meaningsEl.textContent = '';
   if (meanings.length === 0){
-    meaningsEl.textContent = "Kelime bulunamadı!"
+    
   }else{
     for (meaning of meanings){
       const li = document.createElement("li");
@@ -32,9 +32,9 @@ window.addEventListener("DOMContentLoaded", () => {
     .querySelector("#search-button")
     .addEventListener("click", () => search());
 
-  /*
+  
   document
   .querySelector("#search-input")
-  .addEventListener("keydown", () => search())
-  */
+  .addEventListener("keyup", () => search())
+  
 });
